@@ -13,6 +13,7 @@ class Source(Base):
         self.description = "name and emails from your google accounts"
         self.mark = "[gc]"
         self.filetypes = []
+        self.min_pattern_length = 4
 
     def on_init(self, context):
         self.executable = context["vars"].get(
