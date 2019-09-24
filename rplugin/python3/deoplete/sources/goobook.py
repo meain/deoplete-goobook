@@ -10,28 +10,21 @@ class Source(Base):
 
         self.rank = 100
         self.name = "goobooks"
-        self.description = "name and emails from your google accounts"
-        self.mark = "[gc]"
-        self.filetypes = []
+        self.description = "emails from your google accounts"
+        self.mark = "[goobook]"
+        self.filetypes = ['mail']
         self.min_pattern_length = 4
 
     def on_init(self, context):
-        self.executable = context["vars"].get(
-            "deoplete#sources#goobook#executable", ["goobook"]
-        )
+        self.executable = context["vars"].get("deoplete#sources#goobook#executable", ["goobook"])
 
     def gather_candidates(self, context):
         try:
-            contacts = subprocess.check_output(
-                self.executable + ["query", "@"], universal_newlines=True
-            ).split("\n")[1:-1]
+            contacts = subprocess.check_output(self.executable + ["query", "@"], universal_newlines=True).split("\n")[1:-1]
         except CalledProcessError:
             return []
         results = []
         for contact in contacts:
             email, name, *_ = contact.split("\t")
-            results += [
-                {"word": email, "kind": "email"},
-                {"word": name, "kind": "name"},
-            ]
+            results += [{"word": f"{name} <{email}>", "kind": "email"}]
         return results
