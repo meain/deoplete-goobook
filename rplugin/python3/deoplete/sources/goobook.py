@@ -13,7 +13,7 @@ class Source(Base):
         self.description = "emails from your google accounts"
         self.mark = "[goobook]"
         self.filetypes = ['mail']
-        self.min_pattern_length = 4
+        self.min_pattern_length = 2
 
     def on_init(self, context):
         self.executable = context["vars"].get("deoplete#sources#goobook#executable", ["goobook"])
