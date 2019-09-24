@@ -14,6 +14,7 @@ class Source(Base):
         self.mark = "[goobook]"
         self.filetypes = ['mail']
         self.min_pattern_length = 2
+        self.matchers = ['matcher_full_fuzzy', 'matcher_length']
 
     def on_init(self, context):
         self.executable = context["vars"].get("deoplete#sources#goobook#executable", ["goobook"])
